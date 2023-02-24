@@ -5,6 +5,10 @@
 #include <glut.h>
 #include <cmath>
 
+
+#define PI 3.14159265358979323846
+
+
 vector3 rotateRec = vector3(0, 0, 0);
 vector3 rotateHalfSphere = vector3(0, 0, 0);
 
@@ -35,5 +39,20 @@ private:
 	void rotator(float rate);
 public:
 	Rectangle(vector3 Position, vector3 Velocity, vector3 Force, float Mass, vector3 Color, float _width, float _hieght, float _depth);
+	void draw();
+};
+
+class HalfSphere : public Object
+{
+private:
+	float radius;
+	/*
+	* this function rotates the rectangle
+	* Input: rotation rate
+	* Output: none
+	*/
+	void rotator(float rate);
+public:
+	HalfSphere(vector3 Position, vector3 Velocity, vector3 Force, float Mass, vector3 Color, int _radius);
 	void draw();
 };
