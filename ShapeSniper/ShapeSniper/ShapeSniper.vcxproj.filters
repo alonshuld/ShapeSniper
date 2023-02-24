@@ -21,9 +21,15 @@
     <ClCompile Include="PhysWorld.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ObjectTypes.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PhysWorld.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectTypes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

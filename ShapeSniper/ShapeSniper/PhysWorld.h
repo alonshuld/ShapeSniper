@@ -6,9 +6,6 @@
 #include <random>
 
 
-int counterMiss = 0;
-
-
 class vector3
 {
 public:

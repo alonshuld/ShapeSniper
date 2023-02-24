@@ -134,9 +134,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="ObjectTypes.cpp" />
     <ClCompile Include="PhysWorld.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ObjectTypes.h" />
     <ClInclude Include="PhysWorld.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
