@@ -5,9 +5,6 @@
 #include <glut.h>
 #include <cmath>
 
-vector3 rotateRec = vector3(0, 0, 0);
-vector3 rotateHalfSphere = vector3(0, 0, 0);
-
 
 class Rectangle : public Object
 {
