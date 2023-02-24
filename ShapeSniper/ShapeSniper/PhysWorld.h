@@ -37,6 +37,7 @@ public:
 	vector3 Force;
 	float Mass;
 	vector3 Color;
+	bool Shot;
 	Object(vector3 _Position, vector3 _Velocity, vector3 _Force, float _Mass, vector3 _color);
 	void virtual draw() = 0;
 };
@@ -51,5 +52,7 @@ public:
 	void AddObject(Object* object);
 	void RemoveObject(Object* object);
 	void Step(const float dt);
-	void drawWorld();
+	void drawWorld() const;
+	std::vector<Object*> getObjects() const;
+	void finished();
 }; 

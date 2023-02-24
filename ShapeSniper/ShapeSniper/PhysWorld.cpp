@@ -1,6 +1,7 @@
 #include "PhysWorld.h"
 
 int counterMiss = 0;
+int counterShot = 0;
 
 vector3::vector3(float _x, float _y, float _z) : x(_x), y(_y), z(_z)
 {
@@ -46,9 +47,9 @@ void vector3::operator +=(const vector3& other)
 void generatePosVel(vector3& pos, vector3& vel)
 {
 	std::random_device rd;
-	std::uniform_int_distribution<> distPos(-900, 900);
-	std::uniform_int_distribution<> distVolY(150, 190);
-	std::uniform_int_distribution<> distVolX(10, 100);
+	std::uniform_real_distribution<float> distPos(-900, 900);
+	std::uniform_real_distribution<float> distVolY(150, 190);
+	std::uniform_real_distribution<float> distVolX(10, 100);
 	pos.x = distPos(rd);
 	while (pos.x > -200 && pos.x < 200)
 		pos.x = distPos(rd);
@@ -62,7 +63,7 @@ void generatePosVel(vector3& pos, vector3& vel)
 	vel.z = 0;
 }
 
-Object::Object(vector3 _Position, vector3 _Velocity, vector3 _Force, float _Mass, vector3 _color) : Position(_Position), Velocity(_Velocity), Force(_Force), Mass(_Mass), Color(_color)
+Object::Object(vector3 _Position, vector3 _Velocity, vector3 _Force, float _Mass, vector3 _color) : Position(_Position), Velocity(_Velocity), Force(_Force), Mass(_Mass), Color(_color), Shot(false)
 {
 }
 
@@ -75,7 +76,9 @@ void PhysicalWorld::RemoveObject(Object* object)
 {
 	if (!object)
 		return;
+
 	auto it = std::find(this->m_objects.begin(), this->m_objects.end(), object);
+	
 	if (it == m_objects.end())
 		return;
 
@@ -93,10 +96,20 @@ void PhysicalWorld::Step(const float dt)
 {
 	for (Object* obj : m_objects)
 	{
-		//clear objects that are out of screen
+		//objects that got shot
+		if (obj->Shot)
+		{
+			obj->Shot = false; //reset flag
+			counterShot++;
+			this->RemoveObject(obj);
+			break;
+		}
+		//clear objects that are out of screen and consider them as miss
 		if (obj->Position.x < -1000 || obj->Position.x > 1000 || obj->Position.y < -1000 || obj->Position.y > 1000)
 		{
 			counterMiss++;
+			if (counterMiss > 5)
+				finished();
 			this->RemoveObject(obj);
 			break;
 		}
@@ -106,10 +119,20 @@ void PhysicalWorld::Step(const float dt)
 	}
 }
 
-void PhysicalWorld::drawWorld()
+void PhysicalWorld::drawWorld() const
 {
 	for (Object* obj : m_objects)
 	{
 		obj->draw();
 	}
+}
+
+std::vector<Object*> PhysicalWorld::getObjects() const
+{
+	return this->m_objects;
+}
+
+void PhysicalWorld::finished()
+{
+	this->m_objects.clear();
 }

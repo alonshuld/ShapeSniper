@@ -61,12 +61,18 @@ void dtGenerator(int sec)
 void mouse(int button, int state, int x, int y)
 {
 	float xm, ym;
+	std::vector<Object*> objects = wrld.getObjects();
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
 	{
 		xm = -1000 + (float)x * 1000 / WIDTH * 2;
 		ym = 1000 - (float)y * 1000 / HIEGHT * 2;
 		std::cout << "xPixel = " << x << " | yPixel = " << y << std::endl;
 		std::cout << "xM = " << xm << " | yM = " << ym << std::endl;
+		for (Object* obj : objects)
+		{
+			if (obj->Position.x - xm < 100 && obj->Position.x - xm > -100 && obj->Position.y - ym < 100 && obj->Position.y - ym > -100)
+				obj->Shot = true;
+		}
 	}
 }
 
@@ -114,7 +120,7 @@ int main(int argc, char** argv)
 		vector3(0, 0, 0),			//Force
 		0.1,						//Mass
 		vector3(0.8, 0, 0.2),		//color
-		75							//radius
+		80							//radius
 	);
 
 	wrld.AddObject(&rec);
