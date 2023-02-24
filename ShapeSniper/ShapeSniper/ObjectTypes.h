@@ -6,13 +6,6 @@
 #include <cmath>
 
 
-#define PI 3.14159265358979323846
-
-
-vector3 rotateRec = vector3(0, 0, 0);
-vector3 rotateHalfSphere = vector3(0, 0, 0);
-
-
 class Rectangle : public Object
 {
 private:
