@@ -6,6 +6,10 @@
 #include <random>
 
 
+#define BLUE vector3(0, 0.3, 0.7)
+#define RED vector3(0.5, 0, 0)
+
+
 class vector3
 {
 public:
@@ -15,9 +19,10 @@ public:
 	float* getCord() const;
 	vector3 operator +(const vector3& other);
 	vector3 operator -(const vector3& other);
-	vector3 operator *(float other);
-	vector3 operator /(float other);
+	vector3 operator *(const float other);
+	vector3 operator /(const float other);
 	void operator +=(const vector3& other);
+	bool operator ==(const vector3& other);
 };
 
 

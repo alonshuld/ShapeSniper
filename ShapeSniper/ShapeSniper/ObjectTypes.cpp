@@ -149,7 +149,7 @@ void HalfSphere::draw()
 
 	rotator(2);
 
-	//Sphere
+	//Half Sphere
 	for (bt = 0; bt < PI / 2; bt += dxy)
 	{
 		dzx = PI / 30;

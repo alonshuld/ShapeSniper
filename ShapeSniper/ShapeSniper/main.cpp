@@ -99,32 +99,47 @@ int main(int argc, char** argv)
 
 	vector3 posRec = vector3();
 	vector3 velRec = vector3();
-	vector3 posBall = vector3();
-	vector3 velBall = vector3();
+
+	vector3 posHalfSphere = vector3();
+	vector3 velHalfSphere = vector3();
+
+	vector3 posBomb = vector3();
+	vector3 velBomb = vector3();
 
 	generatePosVel(posRec, velRec);
-	generatePosVel(posBall, velBall);
+	generatePosVel(posHalfSphere, velHalfSphere);
+	generatePosVel(posBomb, velBomb);
 
 	Rectangle rec = Rectangle(
 		posRec,		//axis
 		velRec,		//Velocity
 		vector3(),			//Force
 		0.000001,					//Mass
-		vector3(0, 0.8, 0.2),		//color
+		BLUE,		//color
 		100, 100, 100					//width, hieght, depth
 	);
 
-	HalfSphere halfS1 = HalfSphere(
-		posBall,		//axis
-		velBall,		//Velocity
+	HalfSphere halfSphere = HalfSphere(
+		posHalfSphere,		//axis
+		velHalfSphere,		//Velocity
 		vector3(0, 0, 0),			//Force
 		0.1,						//Mass
-		vector3(0.8, 0, 0.2),		//color
+		BLUE,		//color
 		80							//radius
 	);
 
+	Rectangle bomb = Rectangle(
+		posBomb,		//axis
+		velBomb,		//Velocity
+		vector3(),			//Force
+		0.000001,					//Mass
+		RED,		//color
+		100, 100, 100					//width, hieght, depth
+	);
+
 	wrld.AddObject(&rec);
-	wrld.AddObject(&halfS1);
+	wrld.AddObject(&halfSphere);
+	wrld.AddObject(&bomb);
 
 	glutTimerFunc(0, dtGenerator, 0);
 

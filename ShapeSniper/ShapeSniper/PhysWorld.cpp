@@ -27,12 +27,12 @@ vector3 vector3::operator -(const vector3& other)
 	return vector3(this->x - other.x, this->y - other.y, this->z - other.z);
 }
 
-vector3 vector3::operator *(float other)
+vector3 vector3::operator *(const float other)
 {
 	return vector3(this->x * other, this->y * other, this->z * other);
 }
 
-vector3 vector3::operator /(float other)
+vector3 vector3::operator /(const float other)
 {
 	return vector3(this->x / other, this->y / other, this->z / other);
 }
@@ -42,6 +42,11 @@ void vector3::operator +=(const vector3& other)
 	this->x += other.x;
 	this->y += other.y;
 	this->z += other.z;
+}
+
+bool vector3::operator==(const vector3& other)
+{
+	return (this->x == other.x && this->y == other.y && this->z == other.z);
 }
 
 void generatePosVel(vector3& pos, vector3& vel)
@@ -100,20 +105,22 @@ void PhysicalWorld::Step(const float dt)
 		if (obj->Shot)
 		{
 			obj->Shot = false; //reset flag
-			counterShot++;
+			if(obj->Color == RED) //if shot red objects its bomb
+				counterMiss++;
+			else if(obj->Color == BLUE) //if its blue than its a successful shot
+				counterShot++;
 			this->RemoveObject(obj);
-			break;
 		}
 		//clear objects that are out of screen and consider them as miss
 		if (obj->Position.x < -1000 || obj->Position.x > 1000 || obj->Position.y < -1000 || obj->Position.y > 1000)
 		{
-			counterMiss++;
-			if (counterMiss > 5)
-				finished();
+			if (obj->Color == BLUE)
+				counterMiss++;
 			this->RemoveObject(obj);
-			break;
 		}
 
+		if (counterMiss > 4)
+			finished();
 		obj->Velocity += (obj->Force + m_gravity * obj->Mass) / obj->Mass * dt;
 		obj->Position += obj->Velocity * dt;
 	}
