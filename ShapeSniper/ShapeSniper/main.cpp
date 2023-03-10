@@ -7,42 +7,6 @@
 
 PhysicalWorld wrld = PhysicalWorld();
 
-vector3 posRec = vector3();
-vector3 velRec = vector3();
-
-vector3 posHalfSphere = vector3();
-vector3 velHalfSphere = vector3();
-
-vector3 posBomb = vector3();
-vector3 velBomb = vector3();
-
-Rectangle rec = Rectangle(
-	posRec,			//axis
-	velRec,			//Velocity
-	vector3(),		//Force
-	0.000001,		//Mass
-	BLUE,			//color
-	100, 100, 100	//width, hieght, depth
-);
-
-HalfSphere halfSphere = HalfSphere(
-	posHalfSphere,		//axis
-	velHalfSphere,		//Velocity
-	vector3(0, 0, 0),	//Force
-	0.1,				//Mass
-	BLUE,				//color
-	80					//radius
-);
-
-Rectangle bomb = Rectangle(
-	posBomb,		//axis
-	velBomb,		//Velocity
-	vector3(),		//Force
-	0.000001,		//Mass
-	RED,			//color
-	100, 100, 100	//width, hieght, depth
-);
-
 void System_Of_Axes()
 {
 	glColor3f(1.0, 1.0, 1.0);             /* void glColor3f float red , float green , float blue );   */
@@ -114,23 +78,45 @@ void mouse(int button, int state, int x, int y)
 	}
 }
 
-void startGame()
+void initializeGame()
 {
-	generatePosVel(posRec, velRec);
-	generatePosVel(posHalfSphere, velHalfSphere);
-	generatePosVel(posBomb, velBomb);
-
-	rec.Position = posRec;
-	rec.Velocity = velRec;
-	halfSphere.Position = posHalfSphere;
-	halfSphere.Velocity = velHalfSphere;
-	bomb.Position = posBomb;
-	bomb.Velocity = velBomb;
+	vector3* pos = new vector3();
+	vector3* vel = new vector3();
 
 	wrld.clearObjects();
-	wrld.AddObject(&rec);
-	wrld.AddObject(&halfSphere);
-	wrld.AddObject(&bomb);
+	
+	generatePosVel(pos, vel);
+
+	wrld.AddObject(new Rectangle(
+			*pos,			//axis
+			*vel,			//Velocity
+			vector3(),		//Force
+			0.000001,		//Mass
+			BLUE,			//color
+			100, 100, 100	//width, hieght, depth
+	));
+
+	generatePosVel(pos, vel);
+
+	wrld.AddObject(new HalfSphere(
+		*pos,		//axis
+		*vel,		//Velocity
+		vector3(0, 0, 0),	//Force
+		0.1,				//Mass
+		BLUE,				//color
+		80
+	));
+
+	generatePosVel(pos, vel);
+
+	wrld.AddObject(new Rectangle(
+		*pos,		//axis
+		*vel,		//Velocity
+		vector3(),		//Force
+		0.000001,		//Mass
+		RED,			//color
+		100, 100, 100	//width, hieght, depth
+	));
 }
 
 void keyboard(unsigned char key, int x, int y)
@@ -138,7 +124,7 @@ void keyboard(unsigned char key, int x, int y)
 	switch (key)
 	{
 	case 'q': case 'Q': exit(0); break;
-	case 'r': case 'R': startGame();
+	case 'r': case 'R': initializeGame();
 	}
 }
 
@@ -155,7 +141,7 @@ int main(int argc, char** argv)
 	glutMouseFunc(mouse);
 	init();
 
-	startGame();
+	initializeGame();
 	
 	glutTimerFunc(0, dtGenerator, 0);
 

@@ -120,7 +120,7 @@ void Rectangle::draw()
 
 	rotator(2);
 	drawPolygon();
-	drawOutline(vector3(1, 1, 1));//draws outline
+	drawOutline(vector3(1, 1, 1)); //draws outline
 
 	glPopMatrix();
 }

@@ -8,6 +8,7 @@
 
 #define BLUE vector3(0, 0.3, 0.7)
 #define RED vector3(0.5, 0, 0)
+#define AMOUNT_OF_MISSES 4
 
 
 class vector3
@@ -31,7 +32,7 @@ public:
 * input: position vector and velocity vector
 * output: none
 */
-void generatePosVel(vector3& pos, vector3& vel);
+void generatePosVel(vector3* pos, vector3* vel);
 
 
 class Object

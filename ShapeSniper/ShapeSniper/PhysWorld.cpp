@@ -50,23 +50,23 @@ bool vector3::operator==(const vector3& other)
 	return (this->x == other.x && this->y == other.y && this->z == other.z);
 }
 
-void generatePosVel(vector3& pos, vector3& vel)
+void generatePosVel(vector3* pos, vector3* vel)
 {
 	std::random_device rd;
 	std::uniform_real_distribution<float> distPos(-900, 900);
 	std::uniform_real_distribution<float> distVolY(150, 190);
 	std::uniform_real_distribution<float> distVolX(10, 100);
-	pos.x = distPos(rd);
-	while (pos.x > -200 && pos.x < 200)
-		pos.x = distPos(rd);
-	pos.y = -1000;
-	pos.z = 0;
+	pos->x = distPos(rd);
+	while (pos->x > -200 && pos->x < 200)
+		pos->x = distPos(rd);
+	pos->y = -1000;
+	pos->z = 0;
 
-	vel.x = distVolX(rd);
-	if (pos.x > 0)
-		vel.x = -vel.x;
-	vel.y = distVolY(rd);
-	vel.z = 0;
+	vel->x = distVolX(rd);
+	if (pos->x > 0)
+		vel->x = -vel->x;
+	vel->y = distVolY(rd);
+	vel->z = 0;
 }
 
 Object::Object(vector3 _Position, vector3 _Velocity, vector3 _Force, float _Mass, vector3 _color) : Position(_Position), Velocity(_Velocity), Force(_Force), Mass(_Mass), Color(_color), Shot(false)
@@ -90,12 +90,8 @@ void PhysicalWorld::RemoveObject(Object* object)
 
 	//this->m_objects.erase(it); //removes the object completely
 
-	//i will "recycle" him and give him new cords
-	vector3 pos = vector3();
-	vector3 vel = vector3();
-	generatePosVel(pos, vel);
-	object->Position = pos;
-	object->Velocity = vel;
+	//i will "recycle" the object by giving it new cords
+	generatePosVel(&object->Position, &object->Velocity);
 }
 
 void PhysicalWorld::Step(const float dt)
@@ -120,7 +116,7 @@ void PhysicalWorld::Step(const float dt)
 			this->RemoveObject(obj);
 		}
 
-		if (counterMiss > 4)
+		if (counterMiss > AMOUNT_OF_MISSES)
 		{
 			if (counterShot > counterMax)
 				counterMax = counterShot;
