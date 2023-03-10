@@ -1,5 +1,7 @@
+#define _CRTDBG_MAP_ALLOC
 #include <iostream>
 #include <glut.h>
+#include <crtdbg.h>
 #include "ObjectTypes.h"
 
 #define WIDTH 600
@@ -117,13 +119,16 @@ void initializeGame()
 		RED,			//color
 		100, 100, 100	//width, hieght, depth
 	));
+
+	free(pos);
+	free(vel);
 }
 
 void keyboard(unsigned char key, int x, int y)
 {
 	switch (key)
 	{
-	case 'q': case 'Q': exit(0); break;
+	case 'q': case 'Q': wrld.clearObjects(); _CrtDumpMemoryLeaks(); exit(0); break;
 	case 'r': case 'R': initializeGame();
 	}
 }
@@ -147,6 +152,6 @@ int main(int argc, char** argv)
 
 	glEnable(GL_DEPTH_TEST);
 	glutMainLoop();
-
+	_CrtDumpMemoryLeaks();
 	return 0;
 }

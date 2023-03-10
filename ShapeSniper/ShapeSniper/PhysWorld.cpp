@@ -144,6 +144,10 @@ std::vector<Object*> PhysicalWorld::getObjects() const
 
 void PhysicalWorld::clearObjects()
 {
+	for (Object* obj : m_objects)
+	{
+		free(obj);
+	}
 	this->m_objects.clear();
 	counterMiss = 0;
 	counterShot = 0;
