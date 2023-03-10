@@ -2,6 +2,7 @@
 
 int counterMiss = 0;
 int counterShot = 0;
+int counterMax = 0;
 
 vector3::vector3(float _x, float _y, float _z) : x(_x), y(_y), z(_z)
 {
@@ -120,7 +121,13 @@ void PhysicalWorld::Step(const float dt)
 		}
 
 		if (counterMiss > 4)
-			finished();
+		{
+			if (counterShot > counterMax)
+				counterMax = counterShot;
+			clearObjects();
+			//endScreen(); TODO: Add a end screen function
+		}
+
 		obj->Velocity += (obj->Force + m_gravity * obj->Mass) / obj->Mass * dt;
 		obj->Position += obj->Velocity * dt;
 	}
@@ -139,7 +146,9 @@ std::vector<Object*> PhysicalWorld::getObjects() const
 	return this->m_objects;
 }
 
-void PhysicalWorld::finished()
+void PhysicalWorld::clearObjects()
 {
 	this->m_objects.clear();
+	counterMiss = 0;
+	counterShot = 0;
 }

@@ -59,5 +59,5 @@ public:
 	void Step(const float dt);
 	void drawWorld() const;
 	std::vector<Object*> getObjects() const;
-	void finished();
+	void clearObjects();
 }; 
