@@ -54,8 +54,14 @@ class PhysicalWorld
 private:
 	std::vector<Object*> m_objects;
 	vector3 m_gravity = vector3(0, -10, 0);
+	int counterMiss = 0;
+	int counterShot = 0;
+	int counterMax = 0;
 public:
 	void AddObject(Object* object);
+	int getMiss() const;
+	int getShot() const;
+	int getMax() const;
 	void RemoveObject(Object* object);
 	void Step(const float dt);
 	void drawWorld() const;

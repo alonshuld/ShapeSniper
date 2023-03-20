@@ -2,6 +2,7 @@
 #include <iostream>
 #include <glut.h>
 #include <crtdbg.h>
+#include <string>
 #include "ObjectTypes.h"
 
 #define WIDTH 600
@@ -9,27 +10,57 @@
 
 PhysicalWorld wrld = PhysicalWorld();
 
-void System_Of_Axes()
+
+void draw_string(void* font, const char* str, vector3 pos, vector3 color, float size);
+void display();
+void init();
+void dtGenerator(int sec);
+void mouse(int button, int state, int x, int y);
+void initializeGame();
+void keyboard(unsigned char key, int x, int y);
+
+int main(int argc, char** argv)
 {
-	glColor3f(1.0, 1.0, 1.0);             /* void glColor3f float red , float green , float blue );   */
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
-	glBegin(GL_LINES);                  /* axis X  */
-	glVertex3f(100, 0, 0);
-	glVertex3f(-100, 0, 0);
-	glEnd();
+	glutInit(&argc, argv);
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
+	glutInitWindowPosition(0, 0);
+	glutInitWindowSize(WIDTH, HIEGHT);
+	glutCreateWindow("Program");
 
-	glBegin(GL_LINES);                  /* axis Y  */
-	glVertex3f(0, 100, 0);
-	glVertex3f(0, -100, 0);
-	glEnd();
+	glutDisplayFunc(display);
+	glutKeyboardFunc(keyboard);
+	glutMouseFunc(mouse);
+	init();
 
-	glBegin(GL_LINES);                  /* axis z  */
-	glVertex3f(0, 0, 100);
-	glVertex3f(0, 0, -100);
-	glEnd();
+	initializeGame();
+
+	glutTimerFunc(0, dtGenerator, 0);
+
+	glEnable(GL_DEPTH_TEST);
+	glutMainLoop();
+	_CrtDumpMemoryLeaks();
+	return 0;
 }
 
-void display(void)
+void draw_string(void* font, const char* str, vector3 pos, vector3 color, float size)
+{
+	glPushMatrix();
+	glTranslatef(pos.x, pos.y, pos.z);
+	glScalef(size, size, size);
+	glColor3f(color.x, color.y, color.z);
+	glLineWidth(2);
+	while (*str)
+	{
+		glutStrokeCharacter(font, *str);
+		str++;
+	}
+	glPopMatrix();
+}
+
+
+void display()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
@@ -38,13 +69,18 @@ void display(void)
 	wrld.drawWorld();
 
 	//TODO: Draw Overlay
+	draw_string(GLUT_STROKE_ROMAN, std::string(wrld.getMiss(), 'x').c_str(), vector3(-1000, 850, 0), RED, 1);
+	
+	draw_string(GLUT_STROKE_ROMAN, "Objects Shot: ", vector3(-1000, 750, 0), vector3(1, 1, 1), 0.5);
+	draw_string(GLUT_STROKE_ROMAN, std::to_string(wrld.getShot()).c_str(), vector3(-570, 750, 0), vector3(1, 1, 1), 0.5);
 
-	//draws the white axis
-	//System_Of_Axes();
+	draw_string(GLUT_STROKE_ROMAN, "Top Score: ", vector3(-1000, 650, 0), vector3(1, 1, 1), 0.5);
+	draw_string(GLUT_STROKE_ROMAN, std::to_string(wrld.getMax()).c_str(), vector3(-635, 650, 0), vector3(1, 1, 1), 0.5);
 
 	glutSwapBuffers();
 	glFlush();
 }
+
 
 void init()
 {
@@ -55,12 +91,14 @@ void init()
 	glMatrixMode(GL_MODELVIEW);
 }
 
+
 void dtGenerator(int sec)
 {
 	glutPostRedisplay();
 	glutTimerFunc(1000 / 60, dtGenerator, sec + 1000 / 60); //60 fps
 	wrld.Step(1.0 / 6.0);
 }
+
 
 void mouse(int button, int state, int x, int y)
 {
@@ -80,22 +118,23 @@ void mouse(int button, int state, int x, int y)
 	}
 }
 
+
 void initializeGame()
 {
 	vector3* pos = new vector3();
 	vector3* vel = new vector3();
 
 	wrld.clearObjects();
-	
+
 	generatePosVel(pos, vel);
 
 	wrld.AddObject(new Rectangle(
-			*pos,			//axis
-			*vel,			//Velocity
-			vector3(),		//Force
-			0.000001,		//Mass
-			BLUE,			//color
-			100, 100, 100	//width, hieght, depth
+		*pos,			//axis
+		*vel,			//Velocity
+		vector3(),		//Force
+		0.000001,		//Mass
+		BLUE,			//color
+		100, 100, 100	//width, hieght, depth
 	));
 
 	generatePosVel(pos, vel);
@@ -124,6 +163,7 @@ void initializeGame()
 	free(vel);
 }
 
+
 void keyboard(unsigned char key, int x, int y)
 {
 	switch (key)
@@ -131,27 +171,4 @@ void keyboard(unsigned char key, int x, int y)
 	case 'q': case 'Q': wrld.clearObjects(); _CrtDumpMemoryLeaks(); exit(0); break;
 	case 'r': case 'R': initializeGame();
 	}
-}
-
-int main(int argc, char** argv)
-{
-	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-	glutInitWindowPosition(0, 0);
-	glutInitWindowSize(WIDTH, HIEGHT);
-	glutCreateWindow("Program");
-
-	glutDisplayFunc(display);
-	glutKeyboardFunc(keyboard);
-	glutMouseFunc(mouse);
-	init();
-
-	initializeGame();
-	
-	glutTimerFunc(0, dtGenerator, 0);
-
-	glEnable(GL_DEPTH_TEST);
-	glutMainLoop();
-	_CrtDumpMemoryLeaks();
-	return 0;
 }

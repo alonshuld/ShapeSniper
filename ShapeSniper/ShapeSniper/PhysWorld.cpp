@@ -1,8 +1,5 @@
 #include "PhysWorld.h"
 
-int counterMiss = 0;
-int counterShot = 0;
-int counterMax = 0;
 
 vector3::vector3(float _x, float _y, float _z) : x(_x), y(_y), z(_z)
 {
@@ -76,6 +73,21 @@ Object::Object(vector3 _Position, vector3 _Velocity, vector3 _Force, float _Mass
 void PhysicalWorld::AddObject(Object* object)
 {
 	this->m_objects.push_back(object);
+}
+
+int PhysicalWorld::getMiss() const
+{
+	return this->counterMiss;
+}
+
+int PhysicalWorld::getShot() const
+{
+	return this->counterShot;
+}
+
+int PhysicalWorld::getMax() const
+{
+	return this->counterMax;
 }
 
 void PhysicalWorld::RemoveObject(Object* object)
