@@ -158,7 +158,7 @@ void PhysicalWorld::clearObjects()
 {
 	for (Object* obj : m_objects)
 	{
-		free(obj);
+		delete obj;
 	}
 	this->m_objects.clear();
 	counterMiss = 0;

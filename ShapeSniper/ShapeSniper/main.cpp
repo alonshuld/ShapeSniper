@@ -1,12 +1,10 @@
-#define _CRTDBG_MAP_ALLOC
 #include <iostream>
 #include <glut.h>
-#include <crtdbg.h>
 #include <string>
 #include "ObjectTypes.h"
 
-#define WIDTH 600
-#define HIEGHT 600
+#define WIDTH 800
+#define HIEGHT 800
 
 PhysicalWorld wrld = PhysicalWorld();
 
@@ -21,8 +19,6 @@ void keyboard(unsigned char key, int x, int y);
 
 int main(int argc, char** argv)
 {
-	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 	glutInitWindowPosition(0, 0);
@@ -40,7 +36,6 @@ int main(int argc, char** argv)
 
 	glEnable(GL_DEPTH_TEST);
 	glutMainLoop();
-	_CrtDumpMemoryLeaks();
 	return 0;
 }
 
@@ -69,7 +64,8 @@ void display()
 	wrld.drawWorld();
 
 	//TODO: Draw Overlay
-	draw_string(GLUT_STROKE_ROMAN, std::string(wrld.getMiss(), 'x').c_str(), vector3(-1000, 850, 0), RED, 1);
+	draw_string(GLUT_STROKE_ROMAN, "xxxxx", vector3(-1000, 850, 0), vector3(1, 1, 1), 1);
+	draw_string(GLUT_STROKE_ROMAN, std::string(wrld.getMiss(), 'x').c_str(), vector3(-1000, 850, 1), RED, 1);
 	
 	draw_string(GLUT_STROKE_ROMAN, "Objects Shot: ", vector3(-1000, 750, 0), vector3(1, 1, 1), 0.5);
 	draw_string(GLUT_STROKE_ROMAN, std::to_string(wrld.getShot()).c_str(), vector3(-570, 750, 0), vector3(1, 1, 1), 0.5);
@@ -159,8 +155,8 @@ void initializeGame()
 		100, 100, 100	//width, hieght, depth
 	));
 
-	free(pos);
-	free(vel);
+	delete pos;
+	delete vel;
 }
 
 
@@ -168,7 +164,7 @@ void keyboard(unsigned char key, int x, int y)
 {
 	switch (key)
 	{
-	case 'q': case 'Q': wrld.clearObjects(); _CrtDumpMemoryLeaks(); exit(0); break;
-	case 'r': case 'R': initializeGame();
+	case 'q': case 'Q': wrld.clearObjects(); exit(0); break;
+	case 'r': case 'R': initializeGame(); break;
 	}
 }
