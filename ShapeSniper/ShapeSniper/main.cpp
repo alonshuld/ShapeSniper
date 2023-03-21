@@ -9,13 +9,13 @@
 PhysicalWorld wrld = PhysicalWorld();
 
 
-void draw_string(void* font, const char* str, vector3 pos, vector3 color, float size);
+void draw_string(void* font, const char* str, const vector3 pos, const vector3 color, const float size);
 void display();
 void init();
-void dtGenerator(int sec);
-void mouse(int button, int state, int x, int y);
+void dtGenerator(const int sec);
+void mouse(const int button, const int state, const int x, const int y);
 void initializeGame();
-void keyboard(unsigned char key, int x, int y);
+void keyboard(const unsigned char key, const int x, const int y);
 
 int main(int argc, char** argv)
 {
@@ -39,7 +39,7 @@ int main(int argc, char** argv)
 	return 0;
 }
 
-void draw_string(void* font, const char* str, vector3 pos, vector3 color, float size)
+void draw_string(void* font, const char* str, const vector3 pos, const vector3 color, const float size)
 {
 	glPushMatrix();
 	glTranslatef(pos.x, pos.y, pos.z);
@@ -88,7 +88,7 @@ void init()
 }
 
 
-void dtGenerator(int sec)
+void dtGenerator(const int sec)
 {
 	glutPostRedisplay();
 	glutTimerFunc(1000 / 60, dtGenerator, sec + 1000 / 60); //60 fps
@@ -96,7 +96,7 @@ void dtGenerator(int sec)
 }
 
 
-void mouse(int button, int state, int x, int y)
+void mouse(const int button, const int state, const int x, const int y)
 {
 	float xm, ym;
 	std::vector<Object*> objects = wrld.getObjects();
@@ -104,8 +104,8 @@ void mouse(int button, int state, int x, int y)
 	{
 		xm = -1000 + (float)x * 1000 / WIDTH * 2;
 		ym = 1000 - (float)y * 1000 / HIEGHT * 2;
-		std::cout << "xPixel = " << x << " | yPixel = " << y << std::endl;
-		std::cout << "xM = " << xm << " | yM = " << ym << std::endl;
+		//std::cout << "xPixel = " << x << " | yPixel = " << y << std::endl;
+		//std::cout << "xM = " << xm << " | yM = " << ym << std::endl;
 		for (Object* obj : objects)
 		{
 			if (obj->Position.x - xm < 100 && obj->Position.x - xm > -100 && obj->Position.y - ym < 100 && obj->Position.y - ym > -100)
@@ -119,8 +119,6 @@ void initializeGame()
 {
 	vector3* pos = new vector3();
 	vector3* vel = new vector3();
-
-	wrld.clearObjects();
 
 	generatePosVel(pos, vel);
 
@@ -160,11 +158,11 @@ void initializeGame()
 }
 
 
-void keyboard(unsigned char key, int x, int y)
+void keyboard(const unsigned char key, const int x, const int y)
 {
 	switch (key)
 	{
 	case 'q': case 'Q': wrld.clearObjects(); exit(0); break;
-	case 'r': case 'R': initializeGame(); break;
+	case 'r': case 'R': wrld.clearObjects(); initializeGame(); break;
 	}
 }

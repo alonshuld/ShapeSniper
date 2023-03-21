@@ -17,21 +17,21 @@ private:
 	* Input: vector3 in: r, g, b format
 	* Output: none
 	*/
-	void drawOutline(vector3 color);
+	void drawOutline(const vector3 color) const;
 	/*
 	* This function draws the polygon
 	* Input: vector3 in: r, g, b format
 	* Output: none
 	*/
-	void drawPolygon();
+	void drawPolygon() const;
 	/*
 	* this function rotates the rectangle
 	* Input: rotation rate
 	* Output: none
 	*/
-	void rotator(float rate);
+	void rotator(const float rate);
 public:
-	Rectangle(vector3 Position, vector3 Velocity, vector3 Force, float Mass, vector3 Color, float _width, float _hieght, float _depth);
+	Rectangle(const vector3 Position, const vector3 Velocity, const vector3 Force, const float Mass, const vector3 Color, const float _width, const float _hieght, const float _depth);
 	void draw();
 };
 
@@ -44,8 +44,8 @@ private:
 	* Input: rotation rate
 	* Output: none
 	*/
-	void rotator(float rate);
+	void rotator(const float rate);
 public:
-	HalfSphere(vector3 Position, vector3 Velocity, vector3 Force, float Mass, vector3 Color, int _radius);
+	HalfSphere(const vector3 Position, const vector3 const Velocity, const vector3 Force, const float Mass, const vector3 Color, const int _radius);
 	void draw();
 };

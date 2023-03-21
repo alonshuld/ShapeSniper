@@ -15,15 +15,15 @@ class vector3
 {
 public:
 	float x, y, z;
-	vector3(float _x, float _y, float _z);
+	vector3(const float _x, const float _y, const float _z);
 	vector3();
 	float* getCord() const;
-	vector3 operator +(const vector3& other);
-	vector3 operator -(const vector3& other);
-	vector3 operator *(const float other);
-	vector3 operator /(const float other);
+	vector3 operator +(const vector3& other) const;
+	vector3 operator -(const vector3& other) const;
+	vector3 operator *(const float other) const;
+	vector3 operator /(const float other) const;
 	void operator +=(const vector3& other);
-	bool operator ==(const vector3& other);
+	bool operator ==(const vector3& other) const;
 };
 
 
@@ -38,13 +38,13 @@ void generatePosVel(vector3* pos, vector3* vel);
 class Object
 {
 public:
-	vector3 Position; //x, y, z
-	vector3 Velocity;
-	vector3 Force;
+	vector3 Position;	//x, y, z
+	vector3 Velocity;	//x, y, z
+	vector3 Force;		//x, y, z
 	float Mass;
-	vector3 Color;
+	vector3 Color;		//r, g, b
 	bool Shot;
-	Object(vector3 _Position, vector3 _Velocity, vector3 _Force, float _Mass, vector3 _color);
+	Object(const vector3 _Position, const vector3 _Velocity, const vector3 _Force, const float _Mass, const vector3 _color);
 	void virtual draw() = 0;
 };
 

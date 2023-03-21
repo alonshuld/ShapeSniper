@@ -1,7 +1,7 @@
 #include "PhysWorld.h"
 
 
-vector3::vector3(float _x, float _y, float _z) : x(_x), y(_y), z(_z)
+vector3::vector3(const float _x, const float _y, const float _z) : x(_x), y(_y), z(_z)
 {
 }
 
@@ -15,22 +15,22 @@ float* vector3::getCord() const
 	return temp;
 }
 
-vector3 vector3::operator +(const vector3& other)
+vector3 vector3::operator +(const vector3& other) const
 {
 	return vector3(this->x + other.x, this->y + other.y, this->z + other.z);
 }
 
-vector3 vector3::operator -(const vector3& other)
+vector3 vector3::operator -(const vector3& other) const
 {
 	return vector3(this->x - other.x, this->y - other.y, this->z - other.z);
 }
 
-vector3 vector3::operator *(const float other)
+vector3 vector3::operator *(const float other) const
 {
 	return vector3(this->x * other, this->y * other, this->z * other);
 }
 
-vector3 vector3::operator /(const float other)
+vector3 vector3::operator /(const float other) const
 {
 	return vector3(this->x / other, this->y / other, this->z / other);
 }
@@ -42,7 +42,7 @@ void vector3::operator +=(const vector3& other)
 	this->z += other.z;
 }
 
-bool vector3::operator==(const vector3& other)
+bool vector3::operator==(const vector3& other) const
 {
 	return (this->x == other.x && this->y == other.y && this->z == other.z);
 }
@@ -66,7 +66,7 @@ void generatePosVel(vector3* pos, vector3* vel)
 	vel->z = 0;
 }
 
-Object::Object(vector3 _Position, vector3 _Velocity, vector3 _Force, float _Mass, vector3 _color) : Position(_Position), Velocity(_Velocity), Force(_Force), Mass(_Mass), Color(_color), Shot(false)
+Object::Object(const vector3 _Position, const vector3 _Velocity, const vector3 _Force, const float _Mass, const vector3 _color) : Position(_Position), Velocity(_Velocity), Force(_Force), Mass(_Mass), Color(_color), Shot(false)
 {
 }
 
@@ -97,7 +97,7 @@ void PhysicalWorld::RemoveObject(Object* object)
 
 	auto it = std::find(this->m_objects.begin(), this->m_objects.end(), object);
 	
-	if (it == m_objects.end())
+	if (it == this->m_objects.end())
 		return;
 
 	//this->m_objects.erase(it); //removes the object completely
@@ -108,7 +108,7 @@ void PhysicalWorld::RemoveObject(Object* object)
 
 void PhysicalWorld::Step(const float dt)
 {
-	for (Object* obj : m_objects)
+	for (Object* obj : this->m_objects)
 	{
 		//objects that got shot
 		if (obj->Shot)
@@ -143,10 +143,8 @@ void PhysicalWorld::Step(const float dt)
 
 void PhysicalWorld::drawWorld() const
 {
-	for (Object* obj : m_objects)
-	{
+	for (Object* obj : this->m_objects)
 		obj->draw();
-	}
 }
 
 std::vector<Object*> PhysicalWorld::getObjects() const
@@ -156,10 +154,8 @@ std::vector<Object*> PhysicalWorld::getObjects() const
 
 void PhysicalWorld::clearObjects()
 {
-	for (Object* obj : m_objects)
-	{
+	for (Object* obj : this->m_objects)
 		delete obj;
-	}
 	this->m_objects.clear();
 	counterMiss = 0;
 	counterShot = 0;

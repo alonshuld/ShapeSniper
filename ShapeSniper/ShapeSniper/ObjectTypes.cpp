@@ -5,7 +5,7 @@
 vector3 rotateRec = vector3(0, 0, 0);
 vector3 rotateHalfSphere = vector3(0, 0, 0);
 
-void Rectangle::drawOutline(vector3 color)
+void Rectangle::drawOutline(const vector3 color) const
 {
 	glColor3f(color.x, color.y, color.z);
 
@@ -52,7 +52,7 @@ void Rectangle::drawOutline(vector3 color)
 	glEnd();
 }
 
-void Rectangle::drawPolygon()
+void Rectangle::drawPolygon() const
 {
 	glColor3f(Color.x, Color.y, Color.z);
 	glBegin(GL_POLYGON); //close rec
@@ -98,7 +98,7 @@ void Rectangle::drawPolygon()
 	glEnd();
 }
 
-void Rectangle::rotator(float rate)
+void Rectangle::rotator(const float rate)
 {
 	rotateRec.x += rate;
 	rotateRec.y += rate;
@@ -108,7 +108,7 @@ void Rectangle::rotator(float rate)
 	glRotatef(rotateRec.z, 0, 0, 1);
 }
 
-Rectangle::Rectangle(vector3 Position, vector3 Velocity, vector3 Force, float Mass, vector3 Color, float _width, float _hieght, float _depth)
+Rectangle::Rectangle(const vector3 Position, const vector3 Velocity, const vector3 Force, const float Mass, const vector3 Color, const float _width, const float _hieght, const float _depth)
 	: Object(Position, Velocity, Force, Mass, Color), width(_width), hieght(_hieght), depth(_depth)
 {
 }
@@ -125,7 +125,7 @@ void Rectangle::draw()
 	glPopMatrix();
 }
 
-void HalfSphere::rotator(float rate)
+void HalfSphere::rotator(const float rate)
 {
 	rotateHalfSphere.x += rate;
 	rotateHalfSphere.y += rate;
@@ -135,7 +135,7 @@ void HalfSphere::rotator(float rate)
 	glRotatef(rotateHalfSphere.z, 0, 0, 1);
 }
 
-HalfSphere::HalfSphere(vector3 Position, vector3 Velocity, vector3 Force, float Mass, vector3 Color, int _radius)
+HalfSphere::HalfSphere(const vector3 Position, const vector3 Velocity, const vector3 Force, const float Mass, const vector3 Color, const int _radius)
 	: Object(Position, Velocity, Force, Mass, Color), radius(_radius)
 {
 }
