@@ -90,7 +90,7 @@ int PhysicalWorld::getMax() const
 	return this->counterMax;
 }
 
-void PhysicalWorld::RemoveObject(Object* object)
+void PhysicalWorld::RecycleObject(Object* object)
 {
 	if (!object)
 		return;
@@ -118,14 +118,14 @@ void PhysicalWorld::Step(const float dt)
 				counterMiss++;
 			else if(obj->Color == BLUE) //if its blue than its a successful shot
 				counterShot++;
-			this->RemoveObject(obj);
+			this->RecycleObject(obj);
 		}
 		//clear objects that are out of screen and consider them as miss
 		if (obj->Position.x < -1000 || obj->Position.x > 1000 || obj->Position.y < -1000 || obj->Position.y > 1000)
 		{
 			if (obj->Color == BLUE)
 				counterMiss++;
-			this->RemoveObject(obj);
+			this->RecycleObject(obj);
 		}
 
 		if (counterMiss > AMOUNT_OF_MISSES)

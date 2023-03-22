@@ -9,13 +9,48 @@
 PhysicalWorld wrld = PhysicalWorld();
 
 
+/*
+* This function draws a string
+* Input: font, string, position, color of string, size of text
+* Ouput: none
+*/
 void draw_string(void* font, const char* str, const vector3 pos, const vector3 color, const float size);
+/*
+* This function displays the screen
+* Input: none
+* Output: none
+*/
 void display();
+/*
+* This function initializes the the cords
+* Input: none
+* Output: none
+*/
 void init();
+/*
+* This function runs 60 times per second
+* Input: none
+* Output: none
+*/
 void dtGenerator(const int sec);
+/*
+* This function handles with mouse clicks
+* Input: button, state, x and y cords
+* Output: none
+*/
 void mouse(const int button, const int state, const int x, const int y);
-void initializeGame();
+/*
+* This function handles with keyboard presses
+* Input: button, state, x and y cords
+* Output: none
+*/
 void keyboard(const unsigned char key, const int x, const int y);
+/*
+* This function initializes the game to be ready for the game
+* Input: none
+* Output: none
+*/
+void initializeGame();
 
 int main(int argc, char** argv)
 {
@@ -80,10 +115,10 @@ void display()
 
 void init()
 {
-	glClearColor(0.2, 0.2, 0.2, 1.0);
+	glClearColor(0.2, 0.2, 0.2, 1.0); //color of background
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrtho(-1000, 1000, -1000, 1000, -1000, 1000);
+	glOrtho(-1000, 1000, -1000, 1000, -1000, 1000); //1000 to each way x, y, z
 	glMatrixMode(GL_MODELVIEW);
 }
 
@@ -102,8 +137,8 @@ void mouse(const int button, const int state, const int x, const int y)
 	std::vector<Object*> objects = wrld.getObjects();
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
 	{
-		xm = -1000 + (float)x * 1000 / WIDTH * 2;
-		ym = 1000 - (float)y * 1000 / HIEGHT * 2;
+		xm = -1000 + x * 1000 / WIDTH * 2; //calculate cords x
+		ym = 1000 - y * 1000 / HIEGHT * 2; //calculate cords y
 		//std::cout << "xPixel = " << x << " | yPixel = " << y << std::endl;
 		//std::cout << "xM = " << xm << " | yM = " << ym << std::endl;
 		for (Object* obj : objects)
