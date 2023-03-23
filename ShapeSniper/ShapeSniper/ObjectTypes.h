@@ -1,7 +1,8 @@
 #pragma once
 
 
-#include "PhysWorld.h"
+#include "Source.h"
+#include <stdlib.h>
 #include <glut.h>
 #include <cmath>
 
@@ -9,9 +10,9 @@
 class Rectangle : public Object
 {
 private:
-	float width;
-	float hieght;
-	float depth;
+	float _width;
+	float _hieght;
+	float _depth;
 	/*
 	* This function draws outline to the rectangle
 	* Input: vector3 in: r, g, b format
@@ -36,14 +37,14 @@ public:
 	Input: none
 	output: none
 	*/
-	Rectangle(const vector3 Position, const vector3 Velocity, const vector3 Force, const float Mass, const vector3 Color, const float _width, const float _hieght, const float _depth);
+	Rectangle(const vector3 pos, const vector3 vel, const vector3 force, const float mass, const vector3 color, const float width, const float hieght, const float depth);
 	void draw();
 };
 
 class HalfSphere : public Object
 {
 private:
-	float radius;
+	float _radius;
 	/*
 	This function rotates the rectangle
 	Input: rotation rate
@@ -56,7 +57,7 @@ public:
 	Input: all the variebles for object and sphere
 	Output: none
 	*/
-	HalfSphere(const vector3 Position, const vector3 const Velocity, const vector3 Force, const float Mass, const vector3 Color, const int _radius);
+	HalfSphere(const vector3 pos, const vector3 const vel, const vector3 force, const float mass, const vector3 color, const int radius);
 	/*
 	This function draws the half sphere
 	Input: none

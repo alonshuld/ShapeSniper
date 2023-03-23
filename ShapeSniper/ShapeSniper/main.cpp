@@ -1,12 +1,10 @@
-#include <iostream>
-#include <glut.h>
 #include <string>
-#include "ObjectTypes.h"
+#include "Game.h"
 
 #define WIDTH 800
 #define HIEGHT 800
 
-PhysicalWorld wrld = PhysicalWorld();
+Game game = Game();
 
 
 /*
@@ -45,12 +43,6 @@ void mouse(const int button, const int state, const int x, const int y);
 * Output: none
 */
 void keyboard(const unsigned char key, const int x, const int y);
-/*
-* This function initializes the game to be ready for the game
-* Input: none
-* Output: none
-*/
-void initializeGame();
 
 int main(int argc, char** argv)
 {
@@ -65,7 +57,7 @@ int main(int argc, char** argv)
 	glutMouseFunc(mouse);
 	init();
 
-	initializeGame();
+	game.start();
 
 	glutTimerFunc(0, dtGenerator, 0);
 
@@ -77,9 +69,9 @@ int main(int argc, char** argv)
 void draw_string(void* font, const char* str, const vector3 pos, const vector3 color, const float size)
 {
 	glPushMatrix();
-	glTranslatef(pos.x, pos.y, pos.z);
+	glTranslatef(pos.getX(), pos.getY(), pos.getZ());
 	glScalef(size, size, size);
-	glColor3f(color.x, color.y, color.z);
+	glColor3f(color.getX(), color.getY(), color.getZ());
 	glLineWidth(2);
 	while (*str)
 	{
@@ -96,17 +88,17 @@ void display()
 	glLoadIdentity();
 	glutPostRedisplay();
 
-	wrld.drawWorld();
+	game.drawWorld();
 
 	//TODO: Draw Overlay
 	draw_string(GLUT_STROKE_ROMAN, "xxxxx", vector3(-1000, 850, 0), vector3(1, 1, 1), 1);
-	draw_string(GLUT_STROKE_ROMAN, std::string(wrld.getMiss(), 'x').c_str(), vector3(-1000, 850, 1), RED, 1);
+	draw_string(GLUT_STROKE_ROMAN, std::string(game.getMiss(), 'x').c_str(), vector3(-1000, 850, 1), RED, 1);
 	
 	draw_string(GLUT_STROKE_ROMAN, "Objects Shot: ", vector3(-1000, 750, 0), vector3(1, 1, 1), 0.5);
-	draw_string(GLUT_STROKE_ROMAN, std::to_string(wrld.getShot()).c_str(), vector3(-570, 750, 0), vector3(1, 1, 1), 0.5);
+	draw_string(GLUT_STROKE_ROMAN, std::to_string(game.getShot()).c_str(), vector3(-570, 750, 0), vector3(1, 1, 1), 0.5);
 
 	draw_string(GLUT_STROKE_ROMAN, "Top Score: ", vector3(-1000, 650, 0), vector3(1, 1, 1), 0.5);
-	draw_string(GLUT_STROKE_ROMAN, std::to_string(wrld.getMax()).c_str(), vector3(-635, 650, 0), vector3(1, 1, 1), 0.5);
+	draw_string(GLUT_STROKE_ROMAN, std::to_string(game.getMax()).c_str(), vector3(-635, 650, 0), vector3(1, 1, 1), 0.5);
 
 	glutSwapBuffers();
 	glFlush();
@@ -127,14 +119,14 @@ void dtGenerator(const int sec)
 {
 	glutPostRedisplay();
 	glutTimerFunc(1000 / 60, dtGenerator, sec + 1000 / 60); //60 fps
-	wrld.Step(1.0 / 6.0);
+	game.step(1.0 / 6.0);
 }
 
 
 void mouse(const int button, const int state, const int x, const int y)
 {
 	float xm, ym;
-	std::vector<Object*> objects = wrld.getObjects();
+	std::vector<Object*> objects = game.getObjects();
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
 	{
 		xm = -1000 + x * 1000 / WIDTH * 2; //calculate cords x
@@ -143,53 +135,10 @@ void mouse(const int button, const int state, const int x, const int y)
 		//std::cout << "xM = " << xm << " | yM = " << ym << std::endl;
 		for (Object* obj : objects)
 		{
-			if (obj->Position.x - xm < 100 && obj->Position.x - xm > -100 && obj->Position.y - ym < 100 && obj->Position.y - ym > -100)
-				obj->Shot = true;
+			if (obj->_pos.getX() - xm < 100 && obj->_pos.getX() - xm > -100 && obj->_pos.getY() - ym < 100 && obj->_pos.getY() - ym > -100)
+				obj->_shot = true;
 		}
 	}
-}
-
-
-void initializeGame()
-{
-	vector3* pos = new vector3();
-	vector3* vel = new vector3();
-
-	generatePosVel(pos, vel);
-
-	wrld.AddObject(new Rectangle(
-		*pos,			//axis
-		*vel,			//Velocity
-		vector3(),		//Force
-		0.000001,		//Mass
-		BLUE,			//color
-		100, 100, 100	//width, hieght, depth
-	));
-
-	generatePosVel(pos, vel);
-
-	wrld.AddObject(new HalfSphere(
-		*pos,		//axis
-		*vel,		//Velocity
-		vector3(0, 0, 0),	//Force
-		0.1,				//Mass
-		BLUE,				//color
-		80
-	));
-
-	generatePosVel(pos, vel);
-
-	wrld.AddObject(new Rectangle(
-		*pos,		//axis
-		*vel,		//Velocity
-		vector3(),		//Force
-		0.000001,		//Mass
-		RED,			//color
-		100, 100, 100	//width, hieght, depth
-	));
-
-	delete pos;
-	delete vel;
 }
 
 
@@ -197,7 +146,7 @@ void keyboard(const unsigned char key, const int x, const int y)
 {
 	switch (key)
 	{
-	case 'q': case 'Q': wrld.clearObjects(); exit(0); break;
-	case 'r': case 'R': wrld.clearObjects(); initializeGame(); break;
+	case 'q': case 'Q': game.end(); exit(0); break;
+	case 'r': case 'R': game.end(); game.start(); break;
 	}
 }
