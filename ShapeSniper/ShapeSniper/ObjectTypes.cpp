@@ -109,9 +109,7 @@ void Rectangle::rotator(const float rate)
 }
 
 Rectangle::Rectangle(const vector3 pos, const vector3 vel, const vector3 force, const float mass, const vector3 color, const float width, const float hieght, const float depth)
-	: Object(pos, vel, force, mass, color), _width(width), _hieght(hieght), _depth(depth)
-{
-}
+	: Object(pos, vel, force, mass, color), _width(width), _hieght(hieght), _depth(depth) {}
 
 void Rectangle::draw()
 {
@@ -136,9 +134,7 @@ void HalfSphere::rotator(const float rate)
 }
 
 HalfSphere::HalfSphere(const vector3 pos, const vector3 vel, const vector3 force, const float mass, const vector3 color, const int radius)
-	: Object(pos, vel, force, mass, color), _radius(radius)
-{
-}
+	: Object(pos, vel, force, mass, color), _radius(radius) {}
 
 void HalfSphere::draw()
 {

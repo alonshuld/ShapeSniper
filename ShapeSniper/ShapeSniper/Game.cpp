@@ -84,7 +84,7 @@ void Game::step(const float dt)
 			end();
 		}
 
-		obj->_vel += (obj->_force + m_gravity * obj->_mass) / obj->_mass * dt;
+		obj->_vel += (obj->_force + _gravity * obj->_mass) / obj->_mass * dt;
 		obj->_pos += obj->_vel * dt;
 	}
 }

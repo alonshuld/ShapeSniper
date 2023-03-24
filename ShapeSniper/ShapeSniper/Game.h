@@ -16,7 +16,7 @@ class Game
 {
 private:
 	std::vector<Object*> _objects;
-	vector3 m_gravity = vector3(0, -10, 0);
+	vector3 _gravity = vector3(0, -10, 0);
 	int _miss = 0;
 	int _shot = 0;
 	int _max = 0;
