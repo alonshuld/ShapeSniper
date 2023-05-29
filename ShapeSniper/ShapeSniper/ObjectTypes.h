@@ -57,7 +57,7 @@ public:
 	Input: all the variebles for object and sphere
 	Output: none
 	*/
-	HalfSphere(const vector3 pos, const vector3 const vel, const vector3 force, const float mass, const vector3 color, const int radius);
+	HalfSphere(const vector3 pos, const vector3 vel, const vector3 force, const float mass, const vector3 color, const int radius);
 	/*
 	This function draws the half sphere
 	Input: none
