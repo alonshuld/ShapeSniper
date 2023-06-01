@@ -41,23 +41,17 @@ public:
 	void draw();
 };
 
-class HalfSphere : public Object
+class Sphere : public Object
 {
 private:
 	float _radius;
-	/*
-	This function rotates the rectangle
-	Input: rotation rate
-	Output: none
-	*/
-	void rotator(const float rate);
 public:
 	/*
 	This function initializes half sphere
 	Input: all the variebles for object and sphere
 	Output: none
 	*/
-	HalfSphere(const vector3 pos, const vector3 vel, const vector3 force, const float mass, const vector3 color, const int radius);
+	Sphere(const vector3 pos, const vector3 vel, const vector3 force, const float mass, const vector3 color, const int radius);
 	/*
 	This function draws the half sphere
 	Input: none

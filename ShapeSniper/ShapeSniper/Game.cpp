@@ -117,7 +117,7 @@ void Game::start()
 
 	posvel = generatePosVel();
 
-	_objects.push_back(new HalfSphere(
+	_objects.push_back(new Sphere(
 		posvel[0],		//axis
 		posvel[1],		//Velocity
 		vector3(0, 0, 0),	//Force

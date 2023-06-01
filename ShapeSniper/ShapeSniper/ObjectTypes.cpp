@@ -123,43 +123,49 @@ void Rectangle::draw()
 	glPopMatrix();
 }
 
-void HalfSphere::rotator(const float rate)
-{
-	rotateHalfSphere.setX(rotateHalfSphere.getX() + rate);
-	rotateHalfSphere.setY(rotateHalfSphere.getY() + rate);
-	rotateHalfSphere.setZ(rotateHalfSphere.getZ() + rate);
-	glRotatef(rotateHalfSphere.getX(), 1, 0, 0);
-	glRotatef(rotateHalfSphere.getY(), 0, 1, 0);
-	glRotatef(rotateHalfSphere.getZ(), 0, 0, 1);
-}
-
-HalfSphere::HalfSphere(const vector3 pos, const vector3 vel, const vector3 force, const float mass, const vector3 color, const int radius)
+Sphere::Sphere(const vector3 pos, const vector3 vel, const vector3 force, const float mass, const vector3 color, const int radius)
 	: Object(pos, vel, force, mass, color), _radius(radius) {}
 
-void HalfSphere::draw()
+void Sphere::draw()
 {
-	float al, dzx, bt, dxy = PI / 30;
 	
 	glPushMatrix();
 	glTranslatef(_pos.getX(), _pos.getY(), _pos.getZ());
-	rotator(2);
 	glColor3f(_color.getX(), _color.getY(), _color.getZ());
+
+	
+	glEnable(GL_DEPTH_TEST); // Enable depth testing
+	glEnable(GL_LIGHTING); // Enable lighting
+	glEnable(GL_LIGHT0); // Enable light source 0
+	glEnable(GL_COLOR_MATERIAL); // Enable coloring of materials
+
+	// Set light source properties
+	GLfloat lightPos[] = { 1.0f, 1.0f, 1.0f, 0.0f };
+	GLfloat lightAmbient[] = { 0.2f, 0.2f, 0.2f, 1.0f };
+	GLfloat lightDiffuse[] = { 0.8f, 0.8f, 0.8f, 1.0f };
+	GLfloat lightSpecular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	// Set material properties
+	GLfloat matAmbient[] = { 0.2f, 0.2f, 0.2f, 1.0f };
+	GLfloat matDiffuse[] = { 0.8f, 0.8f, 0.8f, 1.0f };
+	GLfloat matSpecular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	GLfloat matShininess[] = { 100.0f };
+
+	glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
+	glLightfv(GL_LIGHT0, GL_AMBIENT, lightAmbient);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, lightDiffuse);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, lightSpecular);
+
+	glMaterialfv(GL_FRONT, GL_AMBIENT, matAmbient);
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, matDiffuse);
+	glMaterialfv(GL_FRONT, GL_SPECULAR, matSpecular);
+	glMaterialfv(GL_FRONT, GL_SHININESS, matShininess);
+	
+
+
 	glBegin(GL_POLYGON);
+	glutSolidSphere(_radius, 50, 50);
 
-
-	//Half Sphere
-	for (bt = 0; bt < PI / 2; bt += dxy)
-	{
-		dzx = PI / 30;
-		for (al = 0; al < 2 * PI; al += dzx)
-		{
-			//first half of the sphere
-			glVertex3f(_radius * cos(bt) * sin(al), _radius * sin(bt), _radius * cos(bt) * cos(al));
-			glVertex3f(_radius * cos(bt) * sin(al + dzx), _radius * sin(bt), _radius * cos(bt) * cos(al + dzx));
-			glVertex3f(_radius * cos(bt + dxy) * sin(al + dzx), _radius * sin(bt + dxy), _radius * cos(bt + dxy) * cos(al + dzx));
-			glVertex3f(_radius * cos(bt + dxy) * sin(al), _radius * sin(bt + dxy), _radius * cos(bt + dxy) * cos(al));
-		}
-	}
 	glEnd();
+	glDisable(GL_LIGHTING);
 	glPopMatrix();
 }
