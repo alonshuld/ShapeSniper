@@ -106,13 +106,13 @@ void Game::start()
 {
 	std::vector<vector3> posvel = generatePosVel();
 
-	_objects.push_back(new Rectangle(
+	_objects.push_back(new Cube(
 		posvel[0],		//axis
 		posvel[1],		//Velocity
 		vector3(),		//Force
 		0.000001,		//Mass
 		BLUE,			//color
-		100, 100, 100	//width, hieght, depth
+		100	//width, hieght, depth
 	));
 
 	posvel = generatePosVel();
@@ -128,13 +128,13 @@ void Game::start()
 
 	posvel = generatePosVel();
 
-	_objects.push_back(new Rectangle(
+	_objects.push_back(new Cube(
 		posvel[0],		//axis
 		posvel[1],		//Velocity
 		vector3(),		//Force
 		0.000001,		//Mass
 		RED,			//color
-		100, 100, 100	//width, hieght, depth
+		100	//width, hieght, depth
 	));
 }
 

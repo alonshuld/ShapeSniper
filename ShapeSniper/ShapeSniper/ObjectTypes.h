@@ -7,24 +7,10 @@
 #include <cmath>
 
 
-class Rectangle : public Object
+class Cube : public Object
 {
 private:
-	float _width;
-	float _hieght;
-	float _depth;
-	/*
-	* This function draws outline to the rectangle
-	* Input: vector3 in: r, g, b format
-	* Output: none
-	*/
-	void drawOutline(const vector3 color) const;
-	/*
-	* This function draws the polygon
-	* Input: vector3 in: r, g, b format
-	* Output: none
-	*/
-	void drawPolygon() const;
+	float _rib;
 	/*
 	* this function rotates the rectangle
 	* Input: rotation rate
@@ -37,7 +23,7 @@ public:
 	Input: none
 	output: none
 	*/
-	Rectangle(const vector3 pos, const vector3 vel, const vector3 force, const float mass, const vector3 color, const float width, const float hieght, const float depth);
+	Cube(const vector3 pos, const vector3 vel, const vector3 force, const float mass, const vector3 color, const float _rib);
 	void draw();
 };
 
