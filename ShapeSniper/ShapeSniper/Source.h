@@ -20,6 +20,7 @@ public:
 	vector3 operator /(const float scalar) const;
 	void operator +=(const vector3& other);
 	bool operator ==(const vector3& other) const;
+	bool operator !=(const vector3& other) const;
 };
 
 

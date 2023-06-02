@@ -63,16 +63,16 @@ void Game::step(const float dt)
 		if (obj->_shot)
 		{
 			obj->_shot = false; //reset flag
-			if (obj->_color == RED) //if shot red objects its bomb
+			if (obj->_color == GREY) //if shot red objects its bomb
 				_miss++;
-			else if (obj->_color == BLUE) //if its blue than its a successful shot
+			else
 				_shot++;
 			reposObj(obj);
 		}
 		//clear objects that are out of screen and consider them as miss
 		if (obj->_pos.getX() < -1000 || obj->_pos.getX() > 1000 || obj->_pos.getY() < -1000 || obj->_pos.getY() > 1000)
 		{
-			if (obj->_color == BLUE)
+			if (obj->_color != GREY)
 				_miss++;
 			reposObj(obj);
 		}
@@ -106,13 +106,13 @@ void Game::start()
 {
 	std::vector<vector3> posvel = generatePosVel();
 
-	_objects.push_back(new Cube(
+	_objects.push_back(new Torus(
 		posvel[0],		//axis
 		posvel[1],		//Velocity
 		vector3(),		//Force
 		0.000001,		//Mass
-		BLUE,			//color
-		100	//width, hieght, depth
+		BROWN,			//color
+		30				//radius
 	));
 
 	posvel = generatePosVel();
@@ -122,7 +122,7 @@ void Game::start()
 		posvel[1],		//Velocity
 		vector3(0, 0, 0),	//Force
 		0.1,				//Mass
-		BLUE,				//color
+		GREY,				//color
 		80
 	));
 
