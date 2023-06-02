@@ -6,6 +6,17 @@
 #include <glut.h>
 #include <cmath>
 
+// Set light source properties
+const GLfloat lightPos[] = { 1.0f, 1.0f, 1.0f, 0.0f };
+const GLfloat lightAmbient[] = { 0.2f, 0.2f, 0.2f, 1.0f };
+const GLfloat lightDiffuse[] = { 0.8f, 0.8f, 0.8f, 1.0f };
+const GLfloat lightSpecular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+// Set material properties
+const GLfloat matAmbient[] = { 0.2f, 0.2f, 0.2f, 1.0f };
+const GLfloat matDiffuse[] = { 0.8f, 0.8f, 0.8f, 1.0f };
+const GLfloat matSpecular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+const GLfloat matShininess[] = { 100.0f };
+
 /*
 * this function rotates the cube
 * Input: rotation rate

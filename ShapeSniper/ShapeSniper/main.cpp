@@ -86,7 +86,24 @@ void display()
 	glLoadIdentity();
 	glutPostRedisplay();
 
+	glEnable(GL_DEPTH_TEST); // Enable depth testing
+	glEnable(GL_LIGHTING); // Enable lighting
+	glEnable(GL_LIGHT0); // Enable light source 0
+	glEnable(GL_COLOR_MATERIAL); // Enable coloring of materials
+
+	glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
+	glLightfv(GL_LIGHT0, GL_AMBIENT, lightAmbient);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, lightDiffuse);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, lightSpecular);
+
+	glMaterialfv(GL_FRONT, GL_AMBIENT, matAmbient);
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, matDiffuse);
+	glMaterialfv(GL_FRONT, GL_SPECULAR, matSpecular);
+	glMaterialfv(GL_FRONT, GL_SHININESS, matShininess);
+
 	game.drawWorld();
+
+	glDisable(GL_LIGHTING);
 
 	//TODO: Draw Overlay
 	draw_string(GLUT_STROKE_ROMAN, "xxxxx", vector3(-1000, 850, 0), vector3(1, 1, 1), 1);
