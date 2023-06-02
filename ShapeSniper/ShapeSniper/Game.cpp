@@ -82,6 +82,7 @@ void Game::step(const float dt)
 			if (_shot > _max)
 				_max = _shot;
 			end();
+			break;
 		}
 
 		vector3 accel = (obj->_force + _gravity * obj->_mass) / obj->_mass;
