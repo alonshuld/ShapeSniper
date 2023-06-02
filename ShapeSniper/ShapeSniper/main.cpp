@@ -57,8 +57,6 @@ int main(int argc, char** argv)
 	glutMouseFunc(mouse);
 	init();
 
-	game.start();
-
 	glutTimerFunc(0, dtGenerator, 0);
 
 	glEnable(GL_DEPTH_TEST);
@@ -146,7 +144,7 @@ void keyboard(const unsigned char key, const int x, const int y)
 {
 	switch (key)
 	{
-	case 'q': case 'Q': game.end(); exit(0); break;
-	case 'r': case 'R': game.end(); game.start(); break;
+	case 27: game.end(); exit(0); break;		//escape
+	case 32: game.end(); game.start(); break;	//space
 	}
 }
