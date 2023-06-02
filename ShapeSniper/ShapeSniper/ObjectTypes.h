@@ -69,3 +69,23 @@ public:
 	*/
 	void draw();
 };
+
+class Cone : public Object
+{
+private:
+	float _base;
+	float _height;
+public:
+	/*
+	This function initializes Cone
+	Input: all the variebles for object Cone
+	Output: none
+	*/
+	Cone(const vector3 pos, const vector3 vel, const vector3 force, const float mass, const vector3 color, const int base, const int height);
+	/*
+	This function draws the Cone
+	Input: none
+	Output: none
+	*/
+	void draw();
+};

@@ -8,6 +8,7 @@
 
 
 #define BLUE vector3(0, 0.3, 0.7)
+#define GREEN vector3(0, 0.7, 0)
 #define RED vector3(0.5, 0, 0)
 #define BROWN vector3(0.5, 0.4, 0)
 #define GREY vector3(0.1, 0.1, 0.1)

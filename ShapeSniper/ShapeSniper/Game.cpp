@@ -118,8 +118,8 @@ void Game::start()
 	posvel = generatePosVel();
 
 	_objects.push_back(new Sphere(
-		posvel[0],		//axis
-		posvel[1],		//Velocity
+		posvel[0],			//axis
+		posvel[1],			//Velocity
 		vector3(0, 0, 0),	//Force
 		0.1,				//Mass
 		GREY,				//color
@@ -133,8 +133,19 @@ void Game::start()
 		posvel[1],		//Velocity
 		vector3(),		//Force
 		0.000001,		//Mass
-		RED,			//color
-		100	//width, hieght, depth
+		GREEN,			//color
+		100				//rib
+	));
+
+	posvel = generatePosVel();
+
+	_objects.push_back(new Cone(
+		posvel[0],		//axis
+		posvel[1],		//Velocity
+		vector3(),		//Force
+		0.000001,		//Mass
+		BLUE,			//color
+		80, 80			//base, height
 	));
 }
 
