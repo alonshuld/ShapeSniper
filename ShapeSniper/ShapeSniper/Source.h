@@ -3,22 +3,14 @@
 
 class vector3
 {
-protected:
-	float _x, _y, _z;
 public:
+	float _x, _y, _z;
 	vector3(const float x, const float y, const float z);
 	vector3();
-	void setX(const float x);
-	void setY(const float y);
-	void setZ(const float z);
-	float getX() const;
-	float getY() const;
-	float getZ() const;
 	vector3 operator +(const vector3& other) const;
 	vector3 operator -(const vector3& other) const;
 	vector3 operator *(const float scalar) const;
 	vector3 operator /(const float scalar) const;
-	void operator +=(const vector3& other);
 	bool operator ==(const vector3& other) const;
 	bool operator !=(const vector3& other) const;
 };

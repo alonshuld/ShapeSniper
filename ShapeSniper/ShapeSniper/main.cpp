@@ -67,9 +67,9 @@ int main(int argc, char** argv)
 void draw_string(void* font, const char* str, const vector3 pos, const vector3 color, const float size)
 {
 	glPushMatrix();
-	glTranslatef(pos.getX(), pos.getY(), pos.getZ());
+	glTranslatef(pos._x, pos._y, pos._z);
 	glScalef(size, size, size);
-	glColor3f(color.getX(), color.getY(), color.getZ());
+	glColor3f(color._x, color._y, color._z);
 	glLineWidth(2);
 	while (*str)
 	{
@@ -150,7 +150,7 @@ void mouse(const int button, const int state, const int x, const int y)
 		//std::cout << "xM = " << xm << " | yM = " << ym << std::endl;
 		for (Object* obj : objects)
 		{
-			if (obj->_pos.getX() - xm < 100 && obj->_pos.getX() - xm > -100 && obj->_pos.getY() - ym < 100 && obj->_pos.getY() - ym > -100)
+			if (obj->_pos._x - xm < 100 && obj->_pos._x - xm > -100 && obj->_pos._y - ym < 100 && obj->_pos._y - ym > -100)
 				obj->_shot = true;
 		}
 	}

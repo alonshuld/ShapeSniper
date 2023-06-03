@@ -19,8 +19,8 @@ void Cube::draw()
 {
 	glPushMatrix();
 
-	glTranslatef(_pos.getX(), _pos.getY(), _pos.getZ());
-	glColor3f(_color.getX(), _color.getY(), _color.getZ());
+	glTranslatef(_pos._x, _pos._y, _pos._z);
+	glColor3f(_color._x, _color._y, _color._z);
 	rotator(1);
 
 	glBegin(GL_POLYGON);
@@ -39,8 +39,8 @@ void Sphere::draw()
 {
 	glPushMatrix();
 
-	glTranslatef(_pos.getX(), _pos.getY(), _pos.getZ());
-	glColor3f(_color.getX(), _color.getY(), _color.getZ());
+	glTranslatef(_pos._x, _pos._y, _pos._z);
+	glColor3f(_color._x, _color._y, _color._z);
 
 	glBegin(GL_POLYGON);
 
@@ -58,8 +58,8 @@ void Torus::draw()
 {
 	glPushMatrix();
 
-	glTranslatef(_pos.getX(), _pos.getY(), _pos.getZ());
-	glColor3f(_color.getX(), _color.getY(), _color.getZ());
+	glTranslatef(_pos._x, _pos._y, _pos._z);
+	glColor3f(_color._x, _color._y, _color._z);
 	rotator(1);
 
 	glBegin(GL_POLYGON);
@@ -78,8 +78,8 @@ void Cone::draw()
 {
 	glPushMatrix();
 	 
-	glTranslatef(_pos.getX(), _pos.getY(), _pos.getZ());
-	glColor3f(_color.getX(), _color.getY(), _color.getZ());
+	glTranslatef(_pos._x, _pos._y, _pos._z);
+	glColor3f(_color._x, _color._y, _color._z);
 	rotator(2);
 
 	glBegin(GL_POLYGON);

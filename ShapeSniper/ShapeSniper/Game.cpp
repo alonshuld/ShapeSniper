@@ -10,16 +10,16 @@ std::vector<vector3> Game::generatePosVel()
 	std::uniform_real_distribution<float> distPos(-900, 900);
 	std::uniform_real_distribution<float> distVolY(150, 190);
 	std::uniform_real_distribution<float> distVolX(10, 100);
-	pos.setX(distPos(rd));
-	while (pos.getX() > -200 && pos.getX() < 200)
-		pos.setX(distPos(rd));
-	pos.setY(-1000);
+	pos._x = distPos(rd);
+	while (pos._x > -200 && pos._x < 200)
+		pos._x = distPos(rd);
+	pos._y = -1000;
 	posvel.push_back(pos);
 
-	vel.setX(distVolX(rd));
-	if (pos.getX() > 0)
-		vel.setX(-vel.getX());
-	vel.setY(distVolY(rd));
+	vel._x = distVolX(rd);
+	if (pos._x > 0)
+		vel._x = -vel._x;
+	vel._y = distVolY(rd);
 	posvel.push_back(vel);
 	return posvel;
 }
@@ -70,7 +70,7 @@ void Game::step(const float dt)
 			reposObj(obj);
 		}
 		//clear objects that are out of screen and consider them as miss
-		if (obj->_pos.getX() < -1000 || obj->_pos.getX() > 1000 || obj->_pos.getY() < -1000 || obj->_pos.getY() > 1000)
+		if (obj->_pos._x < -1000 || obj->_pos._x > 1000 || obj->_pos._y < -1000 || obj->_pos._y > 1000)
 		{
 			if (obj->_color != GREY)
 				_miss++;
