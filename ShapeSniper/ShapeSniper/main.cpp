@@ -44,13 +44,11 @@ void mouse(const int button, const int state, const int x, const int y);
 */
 void keyboard(const unsigned char key, const int x, const int y);
 
-int main(int argc, char** argv)
+int main()
 {
-	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-	glutInitWindowPosition(0, 0);
 	glutInitWindowSize(WIDTH, HIEGHT);
-	glutCreateWindow("Program");
+	glutCreateWindow("Shape Sniper");
 
 	glutDisplayFunc(display);
 	glutKeyboardFunc(keyboard);
@@ -86,10 +84,10 @@ void display()
 	glLoadIdentity();
 	glutPostRedisplay();
 
-	glEnable(GL_DEPTH_TEST); // Enable depth testing
-	glEnable(GL_LIGHTING); // Enable lighting
-	glEnable(GL_LIGHT0); // Enable light source 0
-	glEnable(GL_COLOR_MATERIAL); // Enable coloring of materials
+	glEnable(GL_DEPTH_TEST);		// Enable depth testing
+	glEnable(GL_LIGHTING);			// Enable lighting
+	glEnable(GL_LIGHT0);			// Enable light source 0
+	glEnable(GL_COLOR_MATERIAL);	// Enable coloring of materials
 
 	glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
 	glLightfv(GL_LIGHT0, GL_AMBIENT, lightAmbient);
@@ -105,7 +103,7 @@ void display()
 
 	glDisable(GL_LIGHTING);
 
-	//TODO: Draw Overlay
+	//Draw Overlay
 	draw_string(GLUT_STROKE_ROMAN, "xxxxx", vector3(-1000, 850, 0), vector3(1, 1, 1), 1);
 	draw_string(GLUT_STROKE_ROMAN, std::string(game.getMiss(), 'x').c_str(), vector3(-1000, 850, 1), RED, 1);
 	
@@ -146,8 +144,6 @@ void mouse(const int button, const int state, const int x, const int y)
 	{
 		xm = -1000 + x * 1000 / WIDTH * 2; //calculate cords x
 		ym = 1000 - y * 1000 / HIEGHT * 2; //calculate cords y
-		//std::cout << "xPixel = " << x << " | yPixel = " << y << std::endl;
-		//std::cout << "xM = " << xm << " | yM = " << ym << std::endl;
 		for (Object* obj : objects)
 		{
 			if (obj->_pos._x - xm < 100 && obj->_pos._x - xm > -100 && obj->_pos._y - ym < 100 && obj->_pos._y - ym > -100)
